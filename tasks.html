@@ -10,11 +10,34 @@
     <h2>Good morning</h2>
     <div id="taskCreateContainer">
     <div class="taskContainer">
-    <input type="text">
-    <input type="date">
-    <button>create</button>
+    <input type="text" class="taskName">
+    <input type="date" class="taskDueDate">
+    <button class="createButton">create</button>
+    </div>
+    <div class="taskStatus">
+        <div class="backlogStatus">
+            <h3 >Backlog tasks</h3>
+            <ul class="backlogTaskList"></ul>
+        </div>
+        <div  class="activeStatus">
+            <h3>Active tasks</h3>
+            <ul class="activeTaskList"></ul>
+        </div>
+         <div class="progressStatus">
+            <h3>Progress tasks</h3>
+            <ul class="progressTaskList"></ul>
+        </div>
+        <div class="completedStatus">
+            <h3>Completed tasks</h3>
+            <ul class="completedTaskList"></ul>
+        </div>
+        <div class="expireStatus">
+            <h3>Expire tasks</h3>
+            <ul class="expireTaskList"></ul>
+        </div>
+       
     </div>
     </div>
-    <style src="tasks.js"></style>
+    <script src="tasks.js"></script>
 </body>
 </html>

@@ -33,3 +33,23 @@ color: white;
 width: 50%;
 font-size: larger;
 }
+.taskStatus{
+    border: 2px solid green;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+    }
+    .taskStatus div{
+        border: 2px solid black;
+        width: 19%;
+        height: 40vh;
+        
+    }
+    .taskStatus h3{
+        color:blue;
+    }
+    .taskListItemDetails{
+        display: flex;
+        flex-direction: column;
+    }
