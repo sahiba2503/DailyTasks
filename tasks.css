@@ -1,3 +1,35 @@
+body{
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+    }
+    #taskCreateContainer{
+        /* border: 1px solid red; */
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 h2{
     color:green;
+}
+.taskContainer{
+    /* border: 2px solid black; */
+    width: 50%;
+    height: 25vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.taskContainer input,button{
+    width: 100%;
+    height: 3rem;
+}
+.taskContainer button{
+background-color: brown;
+color: white;
+width: 50%;
+font-size: larger;
 }
