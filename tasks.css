@@ -53,3 +53,7 @@ font-size: larger;
         display: flex;
         flex-direction: column;
     }
+    .activeStatus{
+        overflow: auto;
+        overflow-wrap: break-word;
+    }

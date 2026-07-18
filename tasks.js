@@ -17,14 +17,15 @@ let expireTaskList = document.querySelector(".expireTaskList");
 
 
 let DailyTasklist = [];
+let UpdatedTask = -1;
 
 
 createBtn.addEventListener("click", function () {
   let currentTaskvalue = taskName.value;
   let currentTaskDueDate = taskDueDate.value;
   let currentTaskCreateDate = new Date().toDateString();
-
-  if (currentTaskvalue && currentTaskDueDate) {
+     if(UpdatedTask === -1){
+  if (currentTaskvalue && currentTaskDueDate ) {
     var currentTaskDetail = {
       taskName: currentTaskvalue,
       taskCreateDate: currentTaskCreateDate,
@@ -35,6 +36,23 @@ createBtn.addEventListener("click", function () {
     taskName.value = "";
     taskDueDate.value = "";
     taskCreated( );
+  }
+  else{
+    return;
+  }
+}
+  else{
+     
+      let newDate = new Date();
+      let currDate = newDate.toDateString();
+      DailyTasklist[UpdatedTask].taskName = taskName.value;
+      DailyTasklist[UpdatedTask].taskDueDate = taskDueDate.value;
+      DailyTasklist[UpdatedTask].taskCreateDate = currDate;
+       taskCreated();
+      taskName.value = "";
+    taskDueDate.value = "";
+     UpdatedTask = -1;
+   
   }
 });
 
@@ -65,11 +83,11 @@ function displayTaskDetail(i) {
 function updateItem(index) {
 taskName.value = DailyTasklist[index].taskName;
 taskDueDate.value = DailyTasklist[index].taskDueDate;
-
-    taskCreated();
+ UpdatedTask = index;
+ 
+    
 }
 function deleteItem(index) {
    DailyTasklist.splice(index,1);
-
-    taskCreated();
+     taskCreated();
 }
