@@ -53,6 +53,7 @@ font-size: larger;
         display: flex;
         flex-direction: column;
     }
+<<<<<<< HEAD
     .taskIcons{
         display: flex;
         width: 100%;
@@ -61,4 +62,9 @@ font-size: larger;
     }
     li span{
         cursor: pointer;
+=======
+    .activeStatus{
+        overflow: auto;
+        overflow-wrap: break-word;
+>>>>>>> everydayTasks
     }
