@@ -36,15 +36,8 @@ createBtn.addEventListener("click", function () {
   }
 });
 
-// function taskCreated(currentTask, currentTaskArr, active, currentTaskList) {
-//   currentTask.innerHTML = "";
-//   for (let i = 0; i < currentTaskArr.length; i++) {
-//     if (currentTaskArr[i].taskStatus === active) {
-//       taskDetail(currentTaskArr, i);
-//     }
-//   }
-// }
-function taskCreated(currentTask, currentTaskArr, active, currentTaskList) {
+
+function taskCreated(currentTask, currentTaskArr, active, currgitentTaskList) {
   currentTask.innerHTML = "";
 
   for (let i = 0; i < currentTaskArr.length; i++) {
