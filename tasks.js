@@ -10,11 +10,9 @@ let createBtn = document.querySelector(".createButton");
 
 let activeTaskList = document.querySelector(".activeTaskList");
 
-let backlogTasks = [];
-let activeTasks = [];
-let progressTasks = [];
-let completedTasks = [];
-let expireTasks = [];
+
+let DailyTasklist = [];
+
 
 createBtn.addEventListener("click", function () {
   let currentTaskvalue = taskName.value;
@@ -28,39 +26,56 @@ createBtn.addEventListener("click", function () {
       taskDueDate: currentTaskDueDate,
       taskStatus: "active",
     };
-    activeTasks.push(currentTaskDetail);
+    DailyTasklist.push(currentTaskDetail);
     taskName.value = "";
     taskDueDate.value = "";
     let active = "active";
-    taskCreated(activeTaskList, activeTasks, active, activeTaskList);
+    taskCreated();
   }
 });
 
 
-function taskCreated(currentTask, currentTaskArr, active, currgitentTaskList) {
+function taskCreated() {
   currentTask.innerHTML = "";
 
-  for (let i = 0; i < currentTaskArr.length; i++) {
-    if (currentTaskArr[i].taskStatus === active) {
-      taskDetail(currentTaskArr, i, currentTaskList);
+  for (let i = 0; i < DailyTasklist.length; i++) {
+    if (DailyTasklist[i].taskStatus === active) {
+      taskDetail(i);
     }
   }
 }
+  
 
-function taskDetail(currentTaskArr, i, currentTaskList) {
-  currentTaskList.insertAdjacentHTML(
+function taskCreated() {
+  activeTaskList.innerHTML = "";
+ 
+  for (let i = 0; i < DailyTasklist.length; i++) {
+   
+    displayTaskDetail(i);
+  }
+}
+function displayTaskDetail(i) {
+  activeTaskList.insertAdjacentHTML(
     "beforeend",
     `
       <li class="taskListItemDetails"> 
-      <span>${currentTaskArr[i].taskName}</span>
-      <span>${currentTaskArr[i].taskCreateDate}</span>
-      <span>${currentTaskArr[i].taskDueDate}</span>
-      <span>${currentTaskArr[i].taskStatus}<span>
-      <span>${"-^-"}</span>
-      <span>${"->-"}</span>
-      <span>${"-<-"}</span>
-      <span>${"-X-"}</span>     
+      <span>${DailyTasklist[i].taskName}</span>
+      <span>${DailyTasklist[i].taskCreateDate}</span>
+      <span>${DailyTasklist[i].taskDueDate}</span>
+      <span>${DailyTasklist[i].taskStatus}</span>     
+      <span onclick="updateItem(${i})">⬆️</span>     
+      <span onclick="deleteItem(${i})">❌</span>
       </li> 
       `,
   );
+}
+
+function updateItem(index) {
+taskName.value = DailyTasklist[index].taskName;
+taskDueDate.value = DailyTasklist[index].taskDueDate;
+    taskCreated();
+}
+function deleteItem(index) {
+   DailyTasklist.splice(index,1);
+    taskCreated();
 }
