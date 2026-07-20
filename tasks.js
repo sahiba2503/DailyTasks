@@ -28,6 +28,7 @@ createBtn.addEventListener("click", function () {
       taskCreateDate: currentTaskCreateDate,
       taskDueDate: currentTaskDueDate,
       taskStatus: "active",
+      taskUpdated:"No updated",
     };
     DailyTasklist.push(currentTaskDetail);
     taskName.value = "";
@@ -42,7 +43,8 @@ createBtn.addEventListener("click", function () {
       let currDate = newDate.toDateString();
       DailyTasklist[UpdatedTask].taskName = taskName.value;
       DailyTasklist[UpdatedTask].taskDueDate = taskDueDate.value;
-      DailyTasklist[UpdatedTask].taskCreateDate = currDate;
+      DailyTasklist[UpdatedTask].taskCreateDate = DailyTasklist[UpdatedTask].taskCreateDate;
+      DailyTasklist[UpdatedTask].taskUpdated = currDate;
        taskCreated();
       taskName.value = "";
     taskDueDate.value = "";
@@ -77,20 +79,36 @@ function taskCreated() {
       }
 }
 function displayTaskDetail(i,tasksList) {
-  tasksList.insertAdjacentHTML(
-    "beforeend",
-    `
-      <li class="taskListItemDetails"> 
-      <span>${DailyTasklist[i].taskName}</span>
-      <span>${DailyTasklist[i].taskCreateDate}</span>
-      <span>${DailyTasklist[i].taskDueDate}</span>
-      <span>${DailyTasklist[i].taskStatus}</span>     
-      <span onclick="updateItem(${i})">⬆️</span>     
+    tasksList.insertAdjacentHTML(
+  "beforeend",
+  `
+    <li class="taskListItemDetails">
+      <p><strong>Task Name:</strong> ${DailyTasklist[i].taskName}</p>
+      <p><strong>Create Date:</strong> ${DailyTasklist[i].taskCreateDate}</p>
+      <p><strong>Due Date:</strong> ${DailyTasklist[i].taskDueDate}</p>
+      <p><strong>Status:</strong> ${DailyTasklist[i].taskStatus}</p>
+      <p><strong>Updated:</strong> ${DailyTasklist[i].taskUpdated}</p>
+      <span onclick="updateItem(${i})">⬆️</span>
       <span onclick="deleteItem(${i})">❌</span>
       <span onclick="moveNextItem(${i})">➡️</span>
-      </li> 
-      `,
-  );
+      
+    </li>
+  `
+);
+//   tasksList.insertAdjacentHTML(
+//     "beforeend",
+//     `
+//       <li class="taskListItemDetails"> 
+//       Task Name:<span>${DailyTasklist[i].taskName}</span>
+//        Task CreateDate:<span>${DailyTasklist[i].taskCreateDate}</span>
+//        Task DueDate:<span>${DailyTasklist[i].taskDueDate}</span>
+//        Task Status:<span> ${DailyTasklist[i].taskUpdated}</span>    
+//       <span onclick="updateItem(${i})">⬆️</span>     
+//       <span onclick="deleteItem(${i})">❌</span>
+//       <span onclick="moveNextItem(${i})">➡️</span>
+//       </li> 
+//       `,
+//   );
  
 }
 //  <span >⬅️</span>
