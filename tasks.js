@@ -14,16 +14,24 @@ let backlogTaskList = document.querySelector(".backlogTaskList");
 let completedTaskList = document.querySelector(".completedTaskList");
 let expireTaskList = document.querySelector(".expireTaskList");
 
-let DailyTasklist = [];
+let DailyTasklist = JSON.parse(localStorage.getItem("DailyTasklist")) || [];
+//here will use localStorage to manage task data instead of array.
 let UpdatedTask = -1;
+
+function saveTask() {
+  localStorage.setItem("DailyTasklist", JSON.stringify(DailyTasklist));
+}
 
 createBtn.addEventListener("click", function () {
   let currentTaskvalue = taskName.value;
   let currentTaskDueDate = taskDueDate.value;
   let currentTaskCreateDate = new Date().toDateString();
-     if(UpdatedTask === -1){
-  if (currentTaskvalue.trim() && currentTaskDueDate.trim() ) {
-    var currentTaskDetail = {
+       if (!currentTaskvalue || !currentTaskDueDate) {
+    alert("Please fill all fields.");
+    return;
+  }
+  if(UpdatedTask === -1){
+    const currentTaskDetail = {
       taskName: currentTaskvalue,
       taskCreateDate: currentTaskCreateDate,
       taskDueDate: currentTaskDueDate,
@@ -31,26 +39,32 @@ createBtn.addEventListener("click", function () {
       taskUpdated:"No updated",
     };
     DailyTasklist.push(currentTaskDetail);
-    taskName.value = "";
+    saveTask();
+      taskName.value = "";
     taskDueDate.value = "";
     taskCreated( );
-  }
+  
 
 }
   else{
      
       let newDate = new Date();
       let currDate = newDate.toDateString();
+
       DailyTasklist[UpdatedTask].taskName = taskName.value;
       DailyTasklist[UpdatedTask].taskDueDate = taskDueDate.value;
-      DailyTasklist[UpdatedTask].taskCreateDate = DailyTasklist[UpdatedTask].taskCreateDate;
       DailyTasklist[UpdatedTask].taskUpdated = currDate;
-       taskCreated();
-      taskName.value = "";
-    taskDueDate.value = "";
-     UpdatedTask = -1;
+      
    
   }
+ saveTask();
+
+UpdatedTask = -1;
+
+taskName.value = "";
+taskDueDate.value = "";
+
+taskCreated();
 });
 
 function taskCreated() {
@@ -61,33 +75,34 @@ function taskCreated() {
   backlogTaskList.innerHTML = "";
  
   for (let i = 0; i < DailyTasklist.length; i++) {
-   if(DailyTasklist[i].taskStatus == "active"){
+   if(DailyTasklist[i].taskStatus === "active"){
             displayTaskDetail(i,activeTaskList);
    }
-    if(DailyTasklist[i].taskStatus == "progress"){
+    if(DailyTasklist[i].taskStatus === "progress"){
             displayTaskDetail(i,progressTaskList);
    }
-    if(DailyTasklist[i].taskStatus == "completed"){
+    if(DailyTasklist[i].taskStatus === "completed"){
             displayTaskDetail(i,completedTaskList);
    }
-    if(DailyTasklist[i].taskStatus == "expire"){
+    if(DailyTasklist[i].taskStatus === "expire"){
             displayTaskDetail(i,expireTaskList);
    }
-    if(DailyTasklist[i].taskStatus == "backlog"){
+    if(DailyTasklist[i].taskStatus === "backlog"){
             displayTaskDetail(i,backlogTaskList);
    }
       }
 }
 function displayTaskDetail(i,tasksList) {
+  let task = DailyTasklist[i];
     tasksList.insertAdjacentHTML(
   "beforeend",
   `
     <li class="taskListItemDetails">
-      <p><strong>Task Name:</strong> ${DailyTasklist[i].taskName}</p>
-      <p><strong>Create Date:</strong> ${DailyTasklist[i].taskCreateDate}</p>
-      <p><strong>Due Date:</strong> ${DailyTasklist[i].taskDueDate}</p>
-      <p><strong>Status:</strong> ${DailyTasklist[i].taskStatus}</p>
-      <p><strong>Updated:</strong> ${DailyTasklist[i].taskUpdated}</p>
+      <p><strong>Task Name:</strong> ${task.taskName}</p>
+      <p><strong>Create Date:</strong> ${task.taskCreateDate}</p>
+      <p><strong>Due Date:</strong> ${task.taskDueDate}</p>
+      <p><strong>Status:</strong> ${task.taskStatus}</p>
+      <p><strong>Updated:</strong> ${task.taskUpdated}</p>
       <span onclick="updateItem(${i})">⬆️</span>
       <span onclick="deleteItem(${i})">❌</span>
       <span onclick="moveNextItem(${i})">➡️</span>
@@ -95,10 +110,17 @@ function displayTaskDetail(i,tasksList) {
     </li>
   `
 );
+<<<<<<< HEAD
 
  
 }
 
+=======
+ 
+}
+taskCreated();
+//  <span >⬅️</span>
+>>>>>>> everydayTasks
 function updateItem(index) {
 taskName.value = DailyTasklist[index].taskName;
 taskDueDate.value = DailyTasklist[index].taskDueDate;
@@ -108,32 +130,23 @@ taskDueDate.value = DailyTasklist[index].taskDueDate;
 }
 function deleteItem(index) {
    DailyTasklist.splice(index,1);
-    taskName.value = "";
-    taskDueDate.value = "";
+      saveTask();
      taskCreated();
 }
-function moveNextItem(i){
-  if(DailyTasklist[i].taskStatus === "active"){
-DailyTasklist[i].taskStatus="progress";
+const taskStatus=[
+  "backlog","active","progress","completed","expire"
+];
 
-  }
-   else if(DailyTasklist[i].taskStatus === "progress"){
-DailyTasklist[i].taskStatus="completed";
-
-  }
-  else if(DailyTasklist[i].taskStatus === "completed"){
-DailyTasklist[i].taskStatus="expire";
-
-  }
-  else if(DailyTasklist[i].taskStatus === "backlog"){
-DailyTasklist[i].taskStatus="active";
-
-  }
-else if (DailyTasklist[i].taskStatus === "expire") {
-    DailyTasklist[i].taskStatus = "backlog";
-}
-taskCreated();
-
+function moveNextItem(index) {
+       let currentStatus = DailyTasklist[index].taskStatus;
+       let currentIndex = taskStatus.indexOf(currentStatus);
+       currentIndex++;
+      if (currentIndex >= taskStatus.length) {
+        currentIndex = 0;
+    }
+       DailyTasklist[index].taskStatus = taskStatus[currentIndex];
+    saveTask();
+       taskCreated();
 }
 
 
