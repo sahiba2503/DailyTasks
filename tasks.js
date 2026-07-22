@@ -14,8 +14,17 @@ let backlogTaskList = document.querySelector(".backlogTaskList");
 let completedTaskList = document.querySelector(".completedTaskList");
 let expireTaskList = document.querySelector(".expireTaskList");
 
-let DailyTasklist = JSON.parse(localStorage.getItem("DailyTasklist")) || [];
-//here will use localStorage to manage task data instead of array.
+//"Get the DailyTasklist data from localStorage. Convert it from a string into an array or object. If no data exists, use an empty array ([])."
+let data = localStorage.getItem("DailyTasklist");
+
+let DailyTasklist;
+
+if (data) {
+    DailyTasklist = JSON.parse(data);
+} else {
+    DailyTasklist = [];
+}
+
 let UpdatedTask = -1;
 
 function saveTask() {
