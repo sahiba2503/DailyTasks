@@ -115,7 +115,7 @@ function displayTaskDetail(i,tasksList) {
       <span onclick="updateItem(${i})">⬆️</span>
       <span onclick="deleteItem(${i})">❌</span>
       <span onclick="moveNextItem(${i})">➡️</span>
-      
+      <span onclick="movePreItem(${i})">⬅️</span>
     </li>
   `
 );
@@ -135,20 +135,76 @@ function deleteItem(index) {
       saveTask();
      taskCreated();
 }
-const taskStatus=[
-  "backlog","active","progress","completed","expire"
-];
+// const taskStatus=[
+//   "backlog","active","progress","completed","expire"
+// ];
+
+// function moveNextItem(index) {
+//        let currentStatus = DailyTasklist[index].taskStatus;
+//        let currentIndex = taskStatus.indexOf(currentStatus);
+//        currentIndex++;
+//       if (currentIndex >= taskStatus.length) {
+//         currentIndex = 0;
+//     }
+//        DailyTasklist[index].taskStatus = taskStatus[currentIndex];
+//     saveTask();
+//        taskCreated();
+// }
+// function movePreItem(index) {
+//     let currentStatus = DailyTasklist[index].taskStatus;
+//     let currentIndex = taskStatus.indexOf(currentStatus);
+
+//     currentIndex--;
+
+//     if (currentIndex < 0) {
+//         currentIndex = taskStatus.length - 1;
+//     }
+
+//     DailyTasklist[index].taskStatus = taskStatus[currentIndex];
+
+//     saveTask();
+//     taskCreated();
+// }
 
 function moveNextItem(index) {
-       let currentStatus = DailyTasklist[index].taskStatus;
-       let currentIndex = taskStatus.indexOf(currentStatus);
-       currentIndex++;
-      if (currentIndex >= taskStatus.length) {
-        currentIndex = 0;
+
+    if (DailyTasklist[index].taskStatus === "backlog") {
+        DailyTasklist[index].taskStatus = "active";
     }
-       DailyTasklist[index].taskStatus = taskStatus[currentIndex];
+    else if (DailyTasklist[index].taskStatus === "active") {
+        DailyTasklist[index].taskStatus = "progress";
+    }
+    else if (DailyTasklist[index].taskStatus === "progress") {
+        DailyTasklist[index].taskStatus = "completed";
+    }
+    else if (DailyTasklist[index].taskStatus === "completed") {
+        DailyTasklist[index].taskStatus = "expire";
+    }
+    else if (DailyTasklist[index].taskStatus === "expire") {
+        DailyTasklist[index].taskStatus = "backlog";
+    }
+
     saveTask();
-       taskCreated();
+    taskCreated();
 }
+function movePreItem(index) {
 
+    if (DailyTasklist[index].taskStatus === "backlog") {
+        DailyTasklist[index].taskStatus = "expire";
+    }
+    else if (DailyTasklist[index].taskStatus === "active") {
+        DailyTasklist[index].taskStatus = "backlog";
+    }
+    else if (DailyTasklist[index].taskStatus === "progress") {
+        DailyTasklist[index].taskStatus = "active";
+    }
+    else if (DailyTasklist[index].taskStatus === "completed") {
+        DailyTasklist[index].taskStatus = "progress";
+    }
+    else if (DailyTasklist[index].taskStatus === "expire") {
+        DailyTasklist[index].taskStatus = "completed";
+    }
 
+    saveTask();
+    taskCreated();
+}
